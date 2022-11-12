@@ -1,0 +1,51 @@
+body{
+    background-image: url(../imagenes/Cloudy.svg);
+    background-size: cover;
+}
+
+main{
+    height: 90vh;
+    display: grid;
+    place-content: center;
+    padding: 0 20px;
+}
+
+.main-content{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 40px;
+}
+
+.main-content h2{
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.main-content p{
+    text-align: justify;
+    line-height: 48px;
+}
+
+.main-info{
+    font-size: 3rem;
+}
+
+@media(min-width: 1020px){
+    .main-content{
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .main-content picture{
+        width: 60%;
+    }
+
+    .main-content img{
+        width: 100%;
+        max-width: 450px;
+    }
+}

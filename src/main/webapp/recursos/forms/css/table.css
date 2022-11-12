@@ -1,0 +1,163 @@
+body{
+    width: 100%;
+    margin: auto;
+    background-color: #515557;
+}
+
+table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+table th{
+    background-color: white;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 15px 20px 15px 7px;
+    font-size: 15px;
+    font-family: Inter, "Roboto Medium", Arial, ui-rounded;
+}
+
+tbody tr{
+    border-top: none;
+}
+
+thead{
+    border-top: 1px solid gray;
+    top: 0;
+    z-index: 1;
+}
+
+th:not(:nth-child(1)){
+    text-align: left;
+}
+
+table tr:first-child td {
+    border-top: none;
+}
+
+td{
+    border-top: 1px solid gray;
+    border-bottom: none;
+    text-align: left;
+    background-color: inherit;
+    padding: 7px 20px 7px 7px;
+}
+
+td:first-child(:nth-child(1)){
+    background: red;
+}
+
+tr:not(thead tr):hover{
+    background-color: #E8F3FC;
+}
+
+th:nth-child(1){
+    width: fit-content;
+    padding: 0;
+    border-left: 1px solid gray;
+}
+
+th:nth-child(4){
+    width: 14%;
+    text-align: center;
+    border-right: none;
+}
+
+td:nth-child(4){
+    text-align: center;
+    border-right: none;
+}
+
+td:nth-child(5){
+    border-right: 1px solid gray;
+    width: fit-content;
+    padding: 5px;
+}
+
+td:nth-child(1){
+    border-left: 1px solid gray;
+}
+
+th:nth-child(5){
+    border-right: 1px solid gray;
+}
+
+.buttonContainer{
+    max-height: 30px;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+#operations-container{
+    width: 100%;
+}
+
+#table-container{
+    width: 100%;
+    float: left;
+    overflow-y: scroll;
+    text-align: center;
+    height: 660px;
+    border-bottom: 1px solid gray;
+    margin-top: 80px;
+}
+
+#table-container::-webkit-scrollbar{
+    visibility: hidden;
+    background-color: #c7c9ce;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+#table-container:hover::-webkit-scrollbar{
+    visibility: visible;
+}
+#table-container:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+
+
+#table-container::-webkit-scrollbar-thumb{
+    visibility: hidden;
+    background-color: #869bb0;
+    width: 50px;
+    border-radius: 5px;
+}
+
+#table-container::-webkit-scrollbar-thumb:hover{
+    background-color: #82a6d0;
+}
+
+input[type="button"]:not(.active):enabled {
+    border: transparent;
+    background-color: rgb(179, 235, 245);
+}
+
+input[type="button"]:hover:not(.active) {
+    background-color: #a0d7d7;
+}
+
+.medicamentos-main{
+    display: flex;
+    top: 80px;
+}
+
+.tfoot-parent{
+    width: 100%;
+    background-color: #e7e3e3;
+}
+
+.first-col{
+    text-align: center;
+    width: fit-content;
+}
+
+#operations-container{
+    width: 40%;
+    margin-top: 80px;
+}

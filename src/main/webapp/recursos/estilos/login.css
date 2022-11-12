@@ -1,0 +1,94 @@
+/* Confifuración general */
+
+:root{
+
+    --primary-color: #ED89F0;
+    --secodary-color: #F0D886;
+    --acent-color: #9FF5E5;
+}
+
+body{
+    background-image: url(../imagenes/mobile-background.svg);
+    background-size: cover;
+}
+
+/* Contenido del main */
+
+main{
+    display: grid;
+    place-content: center;
+    min-height: 90vh;
+}
+
+/* Inicio de Sesion */
+
+main h2{
+    font-size: 2.8rem;
+}
+
+main h2,
+main span{
+    text-align: center;
+}
+
+main form{
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 40px;
+}
+
+main form label{
+    margin-bottom: 4px;
+}
+
+main form input{
+    margin-bottom: 16px;
+    padding: 6px;
+    height: 28px;
+    border: none;
+}
+
+.user-input{
+    background-color: transparent;
+    border-bottom: 1px solid gray;
+}
+
+.user-input:focus{
+    outline: none;
+    border-bottom: 4px solid var(--acent-color);
+}
+
+.input-button{
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    margin-top: 32px;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    background-color: var(--primary-color);
+}
+
+.input-button:hover{
+    color: white;
+    background-color: var(--acent-color);
+}
+
+
+/* Footer */
+
+@media(min-width: 1020px){
+    body,
+    header{
+        padding: 0 100px;
+    }
+
+    body{
+        background-image: url(../imagenes/desktop-background.svg);
+    }
+    
+    footer{
+        padding: 20px 100px;
+    }
+}
