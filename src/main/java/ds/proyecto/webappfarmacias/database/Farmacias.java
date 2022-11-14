@@ -1,4 +1,4 @@
-package ds.proyecto.database;
+package ds.proyecto.webappfarmacias.database;
 
 public class Farmacias {
     private int cod_sucursal;

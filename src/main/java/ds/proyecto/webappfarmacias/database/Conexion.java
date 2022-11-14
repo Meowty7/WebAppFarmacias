@@ -1,4 +1,4 @@
-package ds.proyecto.database;
+package ds.proyecto.webappfarmacias.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

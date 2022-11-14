@@ -1,6 +1,6 @@
-<%@ page import="ds.proyecto.database.Conexion" %>
-<%@ page import="ds.proyecto.database.Operaciones" %>
-<%@ page import="ds.proyecto.database.Medicamentos" %>
+<%@ page import="ds.proyecto.webappfarmacias.database.Conexion" %>
+<%@ page import="ds.proyecto.webappfarmacias.database.Operaciones" %>
+<%@ page import="ds.proyecto.webappfarmacias.database.Medicamentos" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 
@@ -89,9 +89,7 @@
                     </form>
                 </td>
             </tr>
-            <% }
-
-            %>
+            <% } %>
             </tbody>
         </table>
 
