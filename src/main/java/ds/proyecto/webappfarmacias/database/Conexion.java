@@ -1,5 +1,6 @@
 package ds.proyecto.webappfarmacias.database;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,17 +17,17 @@ public class Conexion {
     }
     public Connection establecerConexion() throws Exception {
         try {
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String url = "jdbc:jtds:sqlserver://MAGB460MVV:1433/"+DATABASE;
-            cnn = DriverManager.getConnection(url,USER,PASSWORD);
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:" + new File("src/main/resources/database/"+DATABASE+".db").getAbsolutePath();
+            cnn = DriverManager.getConnection(url, USER, PASSWORD);
             return cnn;
         } catch (ClassNotFoundException e){
             throw new Exception ("\nPara el programador: "+e+
-                    "\n\nPara el usuario: Error...No se pudo cargar el driver JTDS");
+                    "\n\nPara el usuario: Error...No se pudo cargar el driver sqlite JDBC");
         }
         catch (SQLException e){
             throw new Exception ("\nPara el programador: "+e+
-                    "\n\nPara el usuario: Error... No se pudo establecer la conexion");
+                    "\n\nPara el usuario: Error... No se pudo establecer la conexión");
         }
     }
 }

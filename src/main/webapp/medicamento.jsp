@@ -40,7 +40,7 @@
     }
 %>
 <%!
-    Conexion connexion = new Conexion("FarmaciaDB", "" ,"");
+    Conexion connexion = new Conexion("Farmacia", "" ,"");
     Operaciones objeto = new Operaciones();
     LinkedList<Medicamentos> medicamentos;
     int id = 0;
