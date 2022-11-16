@@ -13,8 +13,6 @@ public class Operaciones {
             String nombreGeneric,
             String nombreComercial,
             float precioFabricante,
-            //float precio_unitario,
-            //int codSucursal,
             Conexion connexion
     )throws Exception{
         Connection con = null;
@@ -27,17 +25,6 @@ public class Operaciones {
             ps.setString(3,nombreComercial);
             ps.setFloat(4,precioFabricante);
             ps.executeUpdate();
-
-            /* ---
-
-            ps = con.prepareStatement("INSERT INTO surtido (cod_sucursal, id_medicamento, precio_venta)" +
-
-                    "VALUES (?,?,?)");
-
-            ps.setInt(1,codSucursal);
-            ps.setInt(2,idMedicamento);
-            ps.setFloat(3,precio_unitario);
-            ps.executeUpdate();*/
 
             con.close();
         }catch (SQLException sqlex){
@@ -92,10 +79,10 @@ public class Operaciones {
         try{
             con = connexion.establecerConexion();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("select cod_sucursal from sucursales");
+            resultSet = statement.executeQuery("select cod_farmacia from farmacias");
             while (resultSet.next()) {
                 Farmacias farm_data = new Farmacias();
-                farm_data.setCod_sucursal(resultSet.getInt("cod_sucursal"));
+                farm_data.setCod_sucursal(resultSet.getInt("cod_farmacia"));
                 pharmacy_list.add(farm_data);
             }
             con.close();
@@ -140,12 +127,9 @@ public class Operaciones {
         Connection con = null;
         try {
             con = connexion.establecerConexion();
-            PreparedStatement ps = con.prepareStatement("DELETE FROM surtido " +
-                    "WHERE id_medicamento = ? " +
-                    "DELETE FROM medicamentos " +
+            PreparedStatement ps = con.prepareStatement("DELETE FROM medicamentos " +
                     "WHERE id_medicamento = ?");
             ps.setInt(1,idMedicamento);
-            ps.setInt(2,idMedicamento);
             if(ps.executeUpdate() > 0)
                 return true;
             con.close();
@@ -156,14 +140,29 @@ public class Operaciones {
         return false;
     }
 
+    /*public void consultas(String name, Conexion conexion) throws Exception{
+        Connection con = null;
+        try{
+            con = conexion.establecerConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT nom_comercial from medicamentos where nom_comercial = ? ");
+            ps.setString(1,name);
+            if(ps.executeUpdate() > 0){
+
+            }
+        }catch (SQLException sqlException){
+            Objects.requireNonNull(con).close();
+            throw new Exception ("Error...al eliminar el registro deseado |" + sqlException);
+        }
+    }*/
+
     public boolean verificarFarmacia(int idFarmacia, Conexion connexion) throws Exception{
         Connection con = null;
         try{
             con = connexion.establecerConexion();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("select cod_sucursal from sucursales");
+            resultSet = statement.executeQuery("select cod_farmacia from farmacias");
             while(resultSet.next()){
-                if(resultSet.getInt("cod_sucursal")==idFarmacia){
+                if(resultSet.getInt("cod_farmacia")==idFarmacia){
                     return true;
                 }
             }
@@ -184,8 +183,8 @@ public class Operaciones {
         try{
             con = connexion.establecerConexion();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("select cod_sucursal, id_medicamento from surtido where cod_sucursal = "
-                    + idFarmacia+"and id_medicamento = "+idMedicamento);
+            resultSet = statement.executeQuery("select cod_farmacia, id_medicamento from inventario where cod_farmacia = "
+                    +idFarmacia+" and id_medicamento = "+idMedicamento);
 
             if(resultSet.next()){
                 return true;
@@ -208,10 +207,10 @@ public class Operaciones {
         Connection con = null;
         try{
             con = connexion.establecerConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO surtido (cod_sucursal, id_medicamento, precio_venta)" +
+            PreparedStatement ps = con.prepareStatement("INSERT INTO inventario (id_medicamento, cod_farmacia, precio_venta)" +
                     "VALUES (?,?,?)");
-            ps.setInt(1,idFarmacia);
-            ps.setInt(2,idMedicamento);
+            ps.setInt(1,idMedicamento);
+            ps.setInt(2,idFarmacia);
             ps.setFloat(3,precio);
             ps.executeUpdate();
 

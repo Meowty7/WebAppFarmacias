@@ -54,7 +54,7 @@
     String value = "";
 %>
 <main class="medicamentos-main">
-        <form onsubmit="setNewId()" method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
+        <form method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
             <input id="lola" hidden value="true" name="val-x" type="text">
             <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
         </form>
@@ -78,6 +78,7 @@
                     throw new RuntimeException(e);
                 }
                 for (Medicamentos medicamento: medicamentos) {
+                    pageContext.setAttribute("m", medicamento);
             %>
             <tr class="cols">
                 <td class="cells first-col"><%out.print(medicamento.getIdMedicamento());%></td>

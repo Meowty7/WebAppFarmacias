@@ -19,6 +19,7 @@ tbody tr{
 }
 
 thead{
+    position: sticky;
     border-top: 1px solid gray;
     top: 0;
     z-index: 1;
@@ -96,6 +97,8 @@ th:nth-child(5){
     border-bottom: 1px solid gray;
     margin-top: 130px;
     margin-left: 2%;
+    position: relative;
+    padding-right: 12px;
 }
 
 #table-container::-webkit-scrollbar{
