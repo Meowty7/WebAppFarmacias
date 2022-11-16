@@ -4,9 +4,23 @@
 CSS settings for HTML div Exact Center
 ------------------------------------------------*/
 
-#popupContact {
+.add-med{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    top: 9vh;
+    margin-left: 25px;
+}
+
+#operations-container{
+    width: 100%;
+    margin-top: 130px;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+#popupContact{
     font-family:'Raleway',sans-serif;
-    margin-left: 8px;
 }
 
 #editForm {
@@ -22,14 +36,14 @@ CSS settings for HTML div Exact Center
 }
 
 .input-formEdit:hover{
-    background-color: #e3edff;
+    background-color: rgba(225, 232, 235, 0.8);
 }
 
 .input-formEdit{
     width: 100%;
     height: 35px;
     margin-top: 7px;
-    background-color: #c0d3f7;
+    background-color: #e1e8eb;
     outline: none;
     display: block;
     border: 0;
@@ -44,7 +58,7 @@ CSS settings for HTML div Exact Center
 }
 
 .form-button:hover{
-
+    opacity: .80;
 }
 
 #edit-btn{
@@ -58,7 +72,47 @@ CSS settings for HTML div Exact Center
 }
 
 .form-button{
+    border-radius: 3px;
+    margin: 2% 2% 2% 0;
+    border: none;
     padding: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: Inter, "Roboto Medium", Arial, ui-rounded;
+    cursor: pointer;
+}
+
+.search-input{
+    position: relative;
+    padding: 5px;
+    width: 250px;
+    border-radius: 2px;
+    border: none;
+    align-self: center;
+    height: 28px;
+    margin-right: 30px;
+    background-color: #e1e8eb;
+}
+
+.form-button.insertar{
+    align-self: center;
+    color: #1471de;
+    width: 100%;
+}
+
+.form-button.save{
+    background-color: #1E5EFFB8;
+    color: white;
+}
+
+.form-button.delete{
+    color: #FF00008C;
+}
+
+.form-button.cancel{
+    border: none;
+    color: #1471DEFF;
+    background-color: transparent;
 }
 
 #button-container{

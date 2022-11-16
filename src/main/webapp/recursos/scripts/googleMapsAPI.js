@@ -30,11 +30,20 @@
                         anchor: new google.maps.Point(7, 7)
                     };
 
-                    let marker = new google.maps.Marker({
+                    const rioAbajo = {
+                        lat:-79.500324, lng:9.013276
+                    };
+
+                    const marker = new google.maps.Marker({
+                        position: rioAbajo, map,
+                        icon: markerImage,
+                    });
+
+                    /*let marker = new google.maps.Marker({
                         position: pos, map,
                         icon: markerImage,
                         title: 'hot dogs'
-                    });
+                    });*/
 
                     const cityCircle = new google.maps.Circle({
                         strokeColor: 'blue',
@@ -48,8 +57,7 @@
                     });
 
                     cityCircle.setMap(map);
-                    //marker.setContent("");
-                    //marker.open(map);
+
                     map.setCenter(pos);
                 },
                 () => {
@@ -59,20 +67,6 @@
             // Browser doesn't support Geolocation
             handleLocationError(false, marker, map.getCenter());
         }
-
-        //new google.maps.InfoWindow;
-
-        /* const locationButton = document.getElementById('bttn')
-         locationButton.textContent = "Pan to Current Location";
-         locationButton.classList.add("custom-map-control-button");*/
-
-        //map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-        //locationButton.addEventListener("click", () => {
-
-        // Try HTML5 geolocation.
-
-
-        //});
 
     }
 

@@ -143,6 +143,12 @@ footer img{
     height: 90px;
 }
 
+footer input[type="radio"]{
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
+    margin: 10px;
+}
+
 .footer-info{
     font-size: 1.4rem;
     font-style: italic;

@@ -13,14 +13,14 @@ public class Operaciones {
             String nombreGeneric,
             String nombreComercial,
             float precioFabricante,
-            float precio_unitario,
-            int codSucursal,
+            //float precio_unitario,
+            //int codSucursal,
             Conexion connexion
     )throws Exception{
         Connection con = null;
         try{
             con = connexion.establecerConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO medicamentos (id_medicamento, nombreGeneric, nombreComercial, precio_m)" +
+            PreparedStatement ps = con.prepareStatement("INSERT INTO medicamentos(id_medicamento, nom_generico, nom_comercial, precio_m) " +
                     "VALUES (?,?,?,?)");
             ps.setInt(1,idMedicamento);
             ps.setString(2,nombreGeneric);
@@ -28,13 +28,16 @@ public class Operaciones {
             ps.setFloat(4,precioFabricante);
             ps.executeUpdate();
 
+            /* ---
+
             ps = con.prepareStatement("INSERT INTO surtido (cod_sucursal, id_medicamento, precio_venta)" +
+
                     "VALUES (?,?,?)");
 
             ps.setInt(1,codSucursal);
             ps.setInt(2,idMedicamento);
             ps.setFloat(3,precio_unitario);
-            ps.executeUpdate();
+            ps.executeUpdate();*/
 
             con.close();
         }catch (SQLException sqlex){

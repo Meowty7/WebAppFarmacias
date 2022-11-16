@@ -45,15 +45,20 @@
     LinkedList<Medicamentos> medicamentos;
     int id = 0;
     float price = 0.00f;
-        String genericName = "",  comercialName = "";
+    String genericName = "",  comercialName = "";
     int idn = 0;
     float precio_n = 0f;
     String comercial = "";
     String generic = "";
+    String attribute = "";
+    String value = "";
 %>
 <main class="medicamentos-main">
+        <form onsubmit="setNewId()" method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
+            <input id="lola" hidden value="true" name="val-x" type="text">
+            <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
+        </form>
     <section id="table-container">
-
         <table id="tableDemo">
             <thead>
             <tr>
@@ -96,20 +101,29 @@
     </section>
 
     <%
-        if(request.getParameter("id")!=null && request.getParameter("op-button")==null) {
-            try{
-                id = Integer.parseInt(request.getParameter("id"));
-                genericName = request.getParameter("generico");
-                comercialName = request.getParameter("comercial");
-                price = Float.parseFloat(request.getParameter("precio"));
-                pageContext.setAttribute("val1",id);
-                pageContext.setAttribute("val2",genericName);
-                pageContext.setAttribute("val3",comercialName);
-                pageContext.setAttribute("val4",price);
-            }catch (NumberFormatException NFE){
-                out.print("Error de conversion numérica: "+NFE);
-            }catch (Exception e){
-                out.print("Ocurrió un error, "+e);
+        if( request.getParameter("id")!=null && request.getParameter("op-button")==null
+                || request.getParameter("val-x")!=null) {
+
+            if(request.getParameter("op-button-insertar")==null) {
+                try {
+                    attribute = "readonly";
+                    value = "guardar";
+                    id = Integer.parseInt(request.getParameter("id"));
+                    genericName = request.getParameter("generico");
+                    comercialName = request.getParameter("comercial");
+                    price = Float.parseFloat(request.getParameter("precio"));
+                    pageContext.setAttribute("val1", id);
+                    pageContext.setAttribute("val2", genericName);
+                    pageContext.setAttribute("val3", comercialName);
+                    pageContext.setAttribute("val4", price);
+                } catch (NumberFormatException NFE) {
+                    out.print("Error de conversion numérica: " + NFE);
+                } catch (Exception e) {
+                    out.print("Ocurrió un error, " + e);
+                }
+            }else{
+                attribute = "required";
+                value = "insertar";
             }
 
     %>
@@ -118,7 +132,7 @@
             <form name="popupContact" autocomplete="off" id="popupContact" action="${pageContext.request.contextPath}/medicamentos" method="POST">
                 <div class="field-container A">
                     <label for="id-medicamento-n">Código Medicamento</label>
-                    <input readonly autocomplete="off" class="input-formEdit" type="text" name="id-medicamento-n" id="id-medicamento-n" value="${val1}">
+                    <input <%=attribute%> autocomplete="off" class="input-formEdit" type="text" name="id-medicamento-n" id="id-medicamento-n" value="${val1}">
                 </div>
 
                 <div class="field-container B">
@@ -137,16 +151,16 @@
                 </div>
 
                 <div id="button-container">
-                    <button id="save" class="form-button save" name="op-button" value="guardar" type="submit">Guardar</button>
+                    <button id="save" class="form-button save" name="op-button" value="<%=value%>" type="submit">Guardar</button>
                     <button class="form-button delete" name="op-button" value="eliminar" type="submit" >Eliminar</button>
-                    <button class="form-button cancel" name="op-button" value="cancelar" type="submit">Cancelar</button>
+                    <button id="cancel" class="form-button cancel" name="op-button" value="cancelar" type="button">Cancelar</button>
                 </div>
             </form>
         </div>
     </section>
     <%
         }else
-        if(request.getParameter("op-button")!=null) {
+            if(request.getParameter("op-button")!=null) {
             try {
                 idn = Integer.parseInt(request.getParameter("id-medicamento-n"));
                 precio_n = Float.parseFloat(request.getParameter("precio-n"));
@@ -159,7 +173,6 @@
             }
 
             if (("guardar").equals(request.getParameter("op-button"))) {
-                //out.print("<script>alert('GUARDANDO...')</script>");
                 try {
                     objeto.modificar(idn, generic, comercial, precio_n, connexion);
                 } catch (NumberFormatException NFE) {
@@ -167,18 +180,28 @@
                 } catch (Exception e) {
                     out.print("Ocurrió un error, " + e);
                 }
-
             } else if (("eliminar").equals(request.getParameter("op-button"))) {
-                //out.print("<script>alert('ELIMINANDO...')</script>");
                 try {
                     objeto.eliminar(idn,connexion);
                 } catch (Exception e) {
                     out.print("Ocurrió un error, " + e);
                 }
             }else if(("cancelar").equals(request.getParameter("op-button"))){
-                //out.print("<script>alert('CANCELANDO...')</script>");
+
+            }else
+                if("insertar".equals(request.getParameter("op-button"))){
+                    out.print("<script>console.log('Hello World')</script>");
+                    try {
+                        objeto.insertar(idn, generic, comercial, precio_n, connexion);
+                    } catch (NumberFormatException NFE) {
+                        out.print("Error de conversion numérica: " + NFE);
+                    } catch (Exception e) {
+                        out.print("Ocurrió un error, " + e);
+                    }
             }
         }
+
+
     %>
 
 </main>

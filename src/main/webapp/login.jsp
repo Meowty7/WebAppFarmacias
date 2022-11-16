@@ -24,6 +24,7 @@
            cursor: pointer;
        }
     </style>
+
 </head>
 <body>
     <header>
@@ -88,7 +89,6 @@
     </main>
 
 <jsp:include page="common/footer.jsp"/>
-
     <script>
         const fieldPassword = document.getElementById('password');
         $('.togglePassword').on('click', function (){
@@ -101,6 +101,7 @@
             }
         });
     </script>
+
 
 </body>
 </html>
