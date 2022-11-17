@@ -29,13 +29,9 @@ public class URLController {
        return "farmacia";
    }
 
-   @Bean
-    public ServletRegistrationBean<HttpServlet> logout(){
-       ServletRegistrationBean<HttpServlet> logoutServlet = new ServletRegistrationBean<>();
-       logoutServlet.setServlet(new Logout());
-       logoutServlet.addUrlMappings("/logout");
-       logoutServlet.setLoadOnStartup(1);
-       return logoutServlet;
+   @RequestMapping("/logout")
+    String logout(){
+       return "logout";
    }
 
 }

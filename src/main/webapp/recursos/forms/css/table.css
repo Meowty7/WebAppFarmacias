@@ -14,6 +14,12 @@ table th{
     font-family: Inter, "Roboto Medium", Arial, ui-rounded;
 }
 
+.tr-form-wrapper{
+    position: absolute;
+    top: 10vh;
+    left: 10vw;
+}
+
 tbody tr{
     border-top: none;
 }
@@ -49,7 +55,7 @@ tr:not(thead tr):hover{
     background-color: #E8F3FC;
 }
 
-th:nth-child(1){
+th:nth-child(1):not(.th-form-wrapper){
     width: fit-content;
     padding: 0;
     border-left: 1px solid gray;
@@ -89,29 +95,37 @@ th:nth-child(5){
 }
 
 #table-container{
-    max-width: 100%;
-    min-width: 80%;
-    overflow-y: scroll;
+    width: 100%;
+    min-width: 70%;
+    overflow: auto;
     text-align: center;
     height: 550px;
+    margin-top: 15vh;
+    margin-left: 20px;
+    padding-right: 0;
     border-bottom: 1px solid gray;
-    margin-top: 130px;
-    margin-left: 2%;
-    position: relative;
-    padding-right: 12px;
+}
+
+.th-form-wrapper{
+    border: none;
+}
+
+#add-form {
+    width: fit-content;
+    height: fit-content;
 }
 
 #table-container::-webkit-scrollbar{
     visibility: hidden;
     background-color: #c7c9ce;
     width: 10px;
-    height: 10px;
     border-radius: 5px;
 }
 
 #table-container:hover::-webkit-scrollbar{
     visibility: visible;
 }
+
 #table-container:hover::-webkit-scrollbar-thumb{
     visibility: visible;
 }
@@ -120,6 +134,7 @@ th:nth-child(5){
     visibility: hidden;
     background-color: #869bb0;
     width: 50px;
+    height: 50px;
     border-radius: 5px;
 }
 
@@ -137,10 +152,7 @@ input[type="button"]:hover:not(.active) {
 }
 
 .medicamentos-main{
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: auto auto;
-    top: 80px;
+    display: flex;
 }
 
 .tfoot-parent{

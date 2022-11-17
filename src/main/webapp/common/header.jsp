@@ -17,7 +17,7 @@
         <ul>
             <li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
             <li><a class="admin-tab" href="#">Administrar tablas <img src="../recursos/iconos/down-arrow.png" alt="opciones-desplegables"></a></li>
-            <li><a href="logout">Cerrar Sesión</a></li>
+            <li><a href="${pageContext.request.contextPath}/logout">Cerrar Sesión</a></li>
         </ul>
     </nav>
     <img class="menu-icon" src="../recursos/iconos/menu-icon.png" alt="menu-icon">

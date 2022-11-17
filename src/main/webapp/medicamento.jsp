@@ -54,10 +54,14 @@
     String value = "";
 %>
 <main class="medicamentos-main">
-        <form method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
-            <input id="lola" hidden value="true" name="val-x" type="text">
-            <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
-        </form>
+    <div class="tr-form-wrapper">
+        <div class="th-form-wrapper">
+            <form method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
+                <input aria-label="" id="lola" hidden value="true" name="val-x" type="text">
+                <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
+            </form>
+        </div>
+    </div>
     <section id="table-container">
         <table id="tableDemo">
             <thead>
@@ -85,7 +89,7 @@
                 <td class="cells"><%out.print(medicamento.getNombreGeneric());%></td>
                 <td class="cells"><%out.print(medicamento.getNombreComercial());%></td>
                 <td class="cells"><%out.print(medicamento.getPrecioFabricante());%></td>
-                <td>
+                <td class="form-cell">
                     <form name="myForm" action="${pageContext.request.contextPath}/medicamentos" id="myForm" method="POST">
                         <input aria-label="" hidden id="id" type="text" name="id" value="<%out.print(medicamento.getIdMedicamento());%>">
                         <input aria-label="" hidden type="text" id="generico" name="generico" value="<%out.print(medicamento.getNombreGeneric());%>">
