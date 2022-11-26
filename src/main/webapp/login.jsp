@@ -1,4 +1,6 @@
+<%@ page import="ds.proyecto.webappfarmacias.database.Conexion" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<jsp:useBean id="u_" class="ds.proyecto.webappfarmacias.database.Operaciones" />
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,19 +58,23 @@
                 response.sendRedirect("/home");
             }else {
                 if (username != null && password != null) {
-                    if (username.equals("franz") && password.equals("1234")) {
-                        session.setAttribute("username", username);
-                        session.setAttribute("password", password);
-                        session.setAttribute("authenticated", true);
-                        response.sendRedirect("/home");
-                    } else {
-                        out.print(errorPanel);
+                    try {
+                        if (u_.user_exists(username, password, new Conexion("Farmacia", "", ""))) {
+                            session.setAttribute("username", username);
+                            session.setAttribute("password", password);
+                            session.setAttribute("authenticated", true);
+                            response.sendRedirect("/home");
+                        } else {
+                            out.print(errorPanel);
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
                 }
         %>
         <h2>Inicio de Sesión</h2>
         <span>Acceda a su cuenta</span> 
-        <form novalidate action="/login" method="POST">
+        <form novalidate action="${pageContext.request.contextPath}/login" method="POST">
             <label for="username"><img src="recursos/iconos/user-icon.png" alt="user-icon" width="16px"> Usuario</label>
             <input required class="user-input" name="username" id="username" type="text" placeholder="Usuario" autocomplete="off">
             <label for="password"><img src="recursos/iconos/password-icon.png" alt="password-icon" width="16px"> Contraseña</label>

@@ -1,15 +1,15 @@
 package ds.proyecto.webappfarmacias.database;
 
 public class Farmacias {
-    private int cod_sucursal;
+    private int cod_farmacia;
     private String nombre_farmacia;
 
-    public int getCod_sucursal() {
-        return cod_sucursal;
+    public int getCod_farmacia() {
+        return cod_farmacia;
     }
 
-    public void setCod_sucursal(int cod_sucursal) {
-        this.cod_sucursal = cod_sucursal;
+    public void setCod_farmacia(int cod_farmacia) {
+        this.cod_farmacia = cod_farmacia;
     }
 
     public String getNombre_farmacia() {

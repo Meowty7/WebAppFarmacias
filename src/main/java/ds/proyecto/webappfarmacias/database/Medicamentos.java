@@ -1,8 +1,6 @@
 package ds.proyecto.webappfarmacias.database;
 
-import java.io.Serializable;
-
-public class Medicamentos implements Serializable {
+public class Medicamentos {
     private String nombreGeneric, nombreComercial;
     private int idMedicamento;
     private float precioFabricante;

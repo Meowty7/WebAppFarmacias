@@ -82,7 +82,7 @@ public class Operaciones {
             resultSet = statement.executeQuery("select cod_farmacia from farmacias");
             while (resultSet.next()) {
                 Farmacias farm_data = new Farmacias();
-                farm_data.setCod_sucursal(resultSet.getInt("cod_farmacia"));
+                farm_data.setCod_farmacia(resultSet.getInt("cod_farmacia"));
                 pharmacy_list.add(farm_data);
             }
             con.close();
@@ -140,20 +140,21 @@ public class Operaciones {
         return false;
     }
 
-    /*public void consultas(String name, Conexion conexion) throws Exception{
+    public boolean user_exists (String u, String p, Conexion connexion) throws Exception{
         Connection con = null;
         try{
-            con = conexion.establecerConexion();
-            PreparedStatement ps = con.prepareStatement("SELECT nom_comercial from medicamentos where nom_comercial = ? ");
-            ps.setString(1,name);
-            if(ps.executeUpdate() > 0){
-
-            }
-        }catch (SQLException sqlException){
+            con = connexion.establecerConexion();
+            PreparedStatement ps = con.prepareStatement("select login_id from user where username = ? and password = ?");
+            ps.setString(1, u);
+            ps.setString(2, p);
+            resultSet = ps.executeQuery();
+            con.close();
+            return resultSet.next();
+        }catch (SQLException e){
             Objects.requireNonNull(con).close();
-            throw new Exception ("Error...al eliminar el registro deseado |" + sqlException);
+            throw new Exception ("Error al verificar el usuario" + e);
         }
-    }*/
+    }
 
     public boolean verificarFarmacia(int idFarmacia, Conexion connexion) throws Exception{
         Connection con = null;
