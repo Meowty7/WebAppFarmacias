@@ -34,3 +34,11 @@ create table inventario
         primary key (id_medicamento, cod_farmacia)
 );
 
+create table user
+(
+    login_id INTEGER     not null
+        constraint user_pk
+            primary key autoincrement,
+    username varchar(20) not null,
+    password varchar(20) not null
+);

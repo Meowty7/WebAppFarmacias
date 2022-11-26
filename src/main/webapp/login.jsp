@@ -29,7 +29,7 @@
 
        .form-wrp{
            width: 100%;
-           padding: 31px;
+           padding: 31px 55px;
            background: white;
            border-radius: 5px;
            box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);;
@@ -71,7 +71,7 @@
             if(sessionActive.getAttribute("authenticated")!=null
                     && sessionActive.getAttribute("authenticated").equals(true)) {
                 response.sendRedirect("/home");
-            }else {
+            }else{
                 if (username != null && password != null) {
                     try {
                         boolean existe = u_.user_exists(username, password, new Conexion("Farmacia", "", ""));
@@ -94,7 +94,7 @@
             <form action="${pageContext.request.contextPath}/login" method="POST">
                 <label for="username"><img src="recursos/iconos/user-icon.png" alt="user-icon" width="16px"> Usuario</label>
                 <input required class="user-input" name="username" id="username" type="text" placeholder="Usuario" autocomplete="off">
-                <label for="password"><img src="recursos/iconos/password-icon.png" alt="password-icon" width="16px"> Contraseña</label>
+                <label for="password"> <img src="recursos/iconos/password-icon.png" alt="password-icon" width="16px"> Contraseña</label>
                 <div class="password-container">
                     <input required class="user-input"
                            name="password"
@@ -102,7 +102,7 @@
                            type="password"
                            placeholder="*********"
                            autocomplete="off">
-                    <img class="togglePassword" width="20" src="recursos/imagenes/notvisible-eye.svg" alt="">
+                    <img class="togglePassword" width="20" src="recursos/imagenes/notvisible-eye.svg" alt="eyelash-ico">
                     <div <%=attr_hide%> class="error-span-wrapper">
                         <span<%=attr_hide%> id="error-span"> Usuario o contraseña incorrectos. </span>
                     </div>
@@ -118,13 +118,14 @@
 <jsp:include page="common/footer.jsp"/>
     <script>
         const fieldPassword = document.getElementById('password');
-        $('.togglePassword').on('click', function (){
+        const tgg_pss = document.getElementsByClassName('togglePassword')
+        tgg_pss[0].addEventListener('click', function (){
             if (fieldPassword.type === "password") {
                 fieldPassword.type = "text";
-                $(this).attr('src','recursos/imagenes/visible-eye.svg')
+                this.src = 'recursos/imagenes/visible-eye.svg'
             } else {
                 fieldPassword.type = "password";
-                $(this).attr('src','recursos/imagenes/notvisible-eye.svg')
+                this.src = 'recursos/imagenes/notvisible-eye.svg'
             }
         });
     </script>

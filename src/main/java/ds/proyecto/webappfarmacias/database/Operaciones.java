@@ -156,6 +156,22 @@ public class Operaciones {
         }
     }
 
+    public void new_user(String uname, String u, Conexion conexion) throws Exception {
+        Connection con = null;
+        try{
+            con = conexion.establecerConexion();
+            PreparedStatement ps =
+                    con.prepareStatement("insert into user (username, password) VALUES (?,?)");
+            ps.setString(1, uname);
+            ps.setString(2, u);
+            resultSet = ps.executeQuery();
+            con.close();
+        }catch (SQLException e){
+            Objects.requireNonNull(con).close();
+            throw new Exception ("Error al registrar el nuevo usuario" + e);
+        }
+    }
+
     public boolean verificarFarmacia(int idFarmacia, Conexion connexion) throws Exception{
         Connection con = null;
         try{
