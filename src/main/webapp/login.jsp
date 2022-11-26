@@ -21,9 +21,24 @@
        .password-container .user-input{
            width: 100%;
        }
+
        .togglePassword{
            position: absolute;
            cursor: pointer;
+       }
+
+       .form-wrp{
+           width: 100%;
+           padding: 31px;
+           background: white;
+           border-radius: 5px;
+           box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);;
+       }
+
+       #error-span{
+           color: red;
+           font-size: 1.2rem;
+           position: absolute;
        }
     </style>
 
@@ -46,10 +61,10 @@
     </header>
 
     <main>
-        <%! String username, password;
-            String errorPanel = "";
-        %>
+        <%! String username, password; %>
         <%
+            session.setAttribute("invalid", "hidden");
+            String attr_hide = (String) session.getAttribute("invalid");
             username = request.getParameter("username");
             password = request.getParameter("password");
             HttpSession sessionActive = request.getSession(false);
@@ -59,36 +74,42 @@
             }else {
                 if (username != null && password != null) {
                     try {
-                        if (u_.user_exists(username, password, new Conexion("Farmacia", "", ""))) {
+                        boolean existe = u_.user_exists(username, password, new Conexion("Farmacia", "", ""));
+                        if (existe) {
                             session.setAttribute("username", username);
                             session.setAttribute("password", password);
                             session.setAttribute("authenticated", true);
                             response.sendRedirect("/home");
                         } else {
-                            out.print(errorPanel);
+                            attr_hide = "";
                         }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
         %>
-        <h2>Inicio de Sesión</h2>
-        <span>Acceda a su cuenta</span> 
-        <form novalidate action="${pageContext.request.contextPath}/login" method="POST">
-            <label for="username"><img src="recursos/iconos/user-icon.png" alt="user-icon" width="16px"> Usuario</label>
-            <input required class="user-input" name="username" id="username" type="text" placeholder="Usuario" autocomplete="off">
-            <label for="password"><img src="recursos/iconos/password-icon.png" alt="password-icon" width="16px"> Contraseña</label>
-            <div class="password-container">
-                <input required class="user-input"
-                       name="password"
-                       id="password"
-                       type="password"
-                       placeholder="*********"
-                       autocomplete="off">
-                <img class="togglePassword" width="20" src="recursos/imagenes/notvisible-eye.svg" alt="">
-            </div>
-            <input class="input-button" type="submit" value="Acceder" name="" id="">
-        </form>
+        <div class="form-wrp">
+            <h2>Inicio de Sesión</h2>
+            <span>Acceda a su cuenta</span>
+            <form action="${pageContext.request.contextPath}/login" method="POST">
+                <label for="username"><img src="recursos/iconos/user-icon.png" alt="user-icon" width="16px"> Usuario</label>
+                <input required class="user-input" name="username" id="username" type="text" placeholder="Usuario" autocomplete="off">
+                <label for="password"><img src="recursos/iconos/password-icon.png" alt="password-icon" width="16px"> Contraseña</label>
+                <div class="password-container">
+                    <input required class="user-input"
+                           name="password"
+                           id="password"
+                           type="password"
+                           placeholder="*********"
+                           autocomplete="off">
+                    <img class="togglePassword" width="20" src="recursos/imagenes/notvisible-eye.svg" alt="">
+                    <div <%=attr_hide%> class="error-span-wrapper">
+                        <span<%=attr_hide%> id="error-span"> Usuario o contraseña incorrectos. </span>
+                    </div>
+                </div>
+                    <input class="input-button" type="submit" value="Acceder" name="login-button" id="">
+            </form>
+        </div>
         <%
             }
         %>
