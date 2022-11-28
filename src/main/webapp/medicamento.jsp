@@ -1,5 +1,5 @@
 <%@ page import="ds.proyecto.webappfarmacias.database.Conexion" %>
-<%@ page import="ds.proyecto.webappfarmacias.database.Operaciones" %>
+<jsp:useBean id="objeto" class="ds.proyecto.webappfarmacias.database.Operaciones" />
 <%@ page import="ds.proyecto.webappfarmacias.database.Medicamentos" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="recursos/estilos/estilo-general.css">
     <link rel="stylesheet" href="recursos/forms/css/form.css">
     <link rel="stylesheet" href="recursos/forms/css/table.css">
+    <link rel="stylesheet" href="recursos/estilos/popdel.css">
     <!-- Estilos de fuente -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +42,6 @@
 %>
 <%!
     Conexion connexion = new Conexion("Farmacia", "" ,"");
-    Operaciones objeto = new Operaciones();
     LinkedList<Medicamentos> medicamentos;
     int id = 0;
     float price = 0.00f;
@@ -57,7 +57,7 @@
     <div class="tr-form-wrapper">
         <div class="th-form-wrapper">
             <form method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
-                <input aria-label="" id="lola" hidden value="true" name="val-x" type="text">
+                <input aria-label="" id="lola" hidden value="true" name="new-m" type="text">
                 <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
             </form>
         </div>
@@ -82,7 +82,6 @@
                     throw new RuntimeException(e);
                 }
                 for (Medicamentos medicamento: medicamentos) {
-                    pageContext.setAttribute("m", medicamento);
             %>
             <tr class="cols">
                 <td class="cells first-col"><%out.print(medicamento.getIdMedicamento());%></td>
@@ -106,8 +105,9 @@
     </section>
 
     <%
+
         if( request.getParameter("id")!=null && request.getParameter("op-button")==null
-                || request.getParameter("val-x")!=null) {
+                || request.getParameter("new-m")!=null) {
 
             if(request.getParameter("op-button-insertar")==null) {
                 try {
@@ -134,7 +134,7 @@
     %>
     <section id="operations-container">
         <div>
-            <form name="popupContact" autocomplete="off" id="popupContact" action="${pageContext.request.contextPath}/medicamentos" method="POST">
+            <form onsubmit="reloadChanges()" name="popupContact" autocomplete="off" id="popupContact" action="${pageContext.request.contextPath}/medicamentos" method="POST">
                 <div class="field-container A">
                     <label for="id-medicamento-n">Código Medicamento</label>
                     <input <%=attribute%> autocomplete="off" class="input-formEdit" type="text" name="id-medicamento-n" id="id-medicamento-n" value="${val1}">
@@ -157,16 +157,48 @@
 
                 <div id="button-container">
                     <button id="save" class="form-button save" name="op-button" value="<%=value%>" type="submit">Guardar</button>
-                    <button class="form-button delete" name="op-button" value="eliminar" type="submit" >Eliminar</button>
+                    <button class="form-button delete" id="delete" name="op-button" type="button" >Eliminar</button>
                     <button id="cancel" class="form-button cancel" name="op-button" value="cancelar" type="button">Cancelar</button>
                 </div>
             </form>
         </div>
+
+        <div class="popup-delete_wrap">
+            <div id="popup-delete">
+                <div>
+                    <img width="35" src="recursos/imagenes/delete_forever_black_24dp.svg" alt="dico">
+                </div>
+                <h3>¿Está seguro?</h3>
+                <span> ¿Realmente desea eliminar este registro? <br>
+                    Esta acción no se puede deshacer
+                </span>
+                <form onsubmit="reloadChanges()" action="${pageContext.request.contextPath}/medicamentos">
+                    <div id="buttons-delete">
+                        <div class="wrapper-bd-pop">
+                            <button id="bd-pop-cancelar" type="button">CANCELAR</button>
+                        </div>
+                        <div class="wrapper-bd-pop">
+                            <input hidden type="text" name="id-medicamento-n" value="${val1}">
+                            <button name="bd-pop-eliminar" value="eliminar" id="bd-pop-eliminar" type="submit">ELIMINAR</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </section>
+
+
     <%
         }else
-            if(request.getParameter("op-button")!=null) {
-            try {
+            if(request.getParameter("op-button")!=null
+                &&
+                request.getParameter("id-medicamento-n")!=null
+                ||
+                request.getParameter("bd-pop-eliminar")!=null ){
+
+            try
+            {
                 idn = Integer.parseInt(request.getParameter("id-medicamento-n"));
                 precio_n = Float.parseFloat(request.getParameter("precio-n"));
                 comercial = request.getParameter("nombre-comercial-n");
@@ -178,25 +210,28 @@
             }
 
             if (("guardar").equals(request.getParameter("op-button"))) {
-                try {
+                try
+                {
                     objeto.modificar(idn, generic, comercial, precio_n, connexion);
                 } catch (NumberFormatException NFE) {
                     out.print("Error de conversion numérica: " + NFE);
                 } catch (Exception e) {
                     out.print("Ocurrió un error, " + e);
                 }
-            } else if (("eliminar").equals(request.getParameter("op-button"))) {
-                try {
-                    objeto.eliminar(idn,connexion);
-                } catch (Exception e) {
-                    out.print("Ocurrió un error, " + e);
-                }
+            }else
+                if (("eliminar").equals(request.getParameter("bd-pop-eliminar"))) {
+                    try
+                    {
+                        objeto.eliminar(idn, connexion);
+                    } catch (Exception e) {
+                        out.print("Ocurrió un error, " + e);
+                    }
             }else if(("cancelar").equals(request.getParameter("op-button"))){
-
+              //hacer nada
             }else
                 if("insertar".equals(request.getParameter("op-button"))){
-                    out.print("<script>console.log('Hello World')</script>");
-                    try {
+                    try
+                    {
                         objeto.insertar(idn, generic, comercial, precio_n, connexion);
                     } catch (NumberFormatException NFE) {
                         out.print("Error de conversion numérica: " + NFE);
@@ -205,7 +240,6 @@
                     }
             }
         }
-
 
     %>
 
@@ -216,3 +250,4 @@
 </body>
 
 </html>
+

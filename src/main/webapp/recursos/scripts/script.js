@@ -9,11 +9,22 @@ function desplegarMenu()
 }
 
 const form = document.getElementById('popupContact');
+
 if(form){
-    form.addEventListener("submit", function (){
+    function reloadChanges(){
         setTimeout(function (){
             location.reload()
         },10)
+    }
+
+    const del = document.getElementById('delete');
+    const popup_del = document.querySelector('.popup-delete_wrap');
+    const cancel_del = document.getElementById('bd-pop-cancelar');
+    del.addEventListener('click', e =>{
+        popup_del.style.display = 'block'
+    });
+    cancel_del.addEventListener("click", e=>{
+        popup_del.style.display = 'none'
     });
 
     const cancel = document.getElementById('cancel')

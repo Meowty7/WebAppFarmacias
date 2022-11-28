@@ -32,7 +32,7 @@
            padding: 31px 55px;
            background: white;
            border-radius: 5px;
-           box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);;
+           box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
        }
 
        #error-span{

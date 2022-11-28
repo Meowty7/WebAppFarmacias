@@ -1,0 +1,72 @@
+.popup-delete_wrap{
+  display: none;
+  position: absolute;
+  z-index: 1;
+  opacity: .92;
+  top: 20%;
+  right: 13%;
+}
+
+#popup-delete{
+  border-radius: 4px;
+  width: fit-content;
+  display: grid;
+  text-align: center;
+  background: white;
+  box-shadow: 0 2px 4px #797878FF, 0 2px 3px #797878FF;
+}
+
+#popup-delete h3{
+  color: gray;
+  margin: 0;
+  align-self: self-end;
+  font-family: Inter, Arial, "Times New Roman",monospace;
+}
+
+#popup-delete img, span{
+  font-size: 1.4rem;
+  font-family: Inter, Arial, "Times New Roman",monospace;
+  margin: 10px;
+}
+
+.wrapper-bd-pop{
+  border-top: 1px solid lightgray;
+  display: inline-block;
+}
+
+.wrapper-bd-pop:last-child{
+  border-left: 1px solid lightgray;
+}
+
+#popup-delete button{
+  width: 100%;
+  font-size: 1.4rem;
+  display: inline-block;
+  padding: 10px 50px;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: Inter, Arial, "Times New Roman",monospace;
+}
+
+#popup-delete button:hover{
+  background-color: #D3D3D33D;
+}
+
+#bd-pop-cancelar{
+  color: #1471DEFF;
+}
+
+#bd-pop-eliminar{
+  color: red;
+  font-weight: bold;
+}
+
+#buttons-delete{
+  white-space: nowrap;
+  font-size: 0;
+  margin: 0;
+  width: 100%;
+  align-self: self-end;
+}
