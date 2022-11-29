@@ -1,5 +1,8 @@
 package ds.proyecto.webappfarmacias.database;
 
+import ds.proyecto.webappfarmacias.tabla.Farmacias;
+import ds.proyecto.webappfarmacias.tabla.Medicamentos;
+
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.Objects;

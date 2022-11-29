@@ -1,4 +1,4 @@
-package ds.proyecto.webappfarmacias.database;
+package ds.proyecto.webappfarmacias.tabla;
 
 public class Farmacias {
     private int cod_farmacia;

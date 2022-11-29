@@ -1,4 +1,4 @@
-package ds.proyecto.webappfarmacias.database;
+package ds.proyecto.webappfarmacias.tabla;
 
 public class Usuario {
     private int user_id;
