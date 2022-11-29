@@ -196,3 +196,59 @@ PANEL DE ERROR
 #gep-button:hover{
     background: #FA415BCB;
 }
+
+/******************************************
+******* PANEL DE EXITO ************
+*******************************************
+ */
+#general-success-panel{
+    z-index: 1;
+    top: 30%;
+    left: 40%;
+    background: white;
+    position: absolute;
+    width: 350px;
+    text-align: center;
+    display: grid;
+    height: 155px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px #797878FF, 0 2px 3px #797878FF;
+}
+
+#gsp-img{
+    margin-top: 10px;
+    position: absolute;
+    bottom: 50%;
+    left: 40%;
+}
+
+#gsp-img span{
+    font-family: Inter,sans-serif, Arial;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#success-message{
+    align-self: self-end;
+    font-family: Inter,sans-serif, Arial;
+    font-size: 1.5rem;
+}
+
+#gsp-button{
+    font-family: Inter,sans-serif, Arial;
+    font-weight: bold;
+    font-size: 1.6rem;
+    margin-top: 2%;
+    height: 35px;
+    border: none;
+    cursor: pointer;
+    align-self: self-end;
+    background: #2DD284FF;
+    width: 100%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#gsp-button:hover{
+    background: #2DD284C3;
+}

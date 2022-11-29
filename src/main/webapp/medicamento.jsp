@@ -53,18 +53,29 @@
     String attribute = "";
     String value = "";
     String delete_btt;
-    String reload = "<script>  document.addEventListener(\"DOMContentLoaded\", e=>{ reloadChanges();  });</script>";
-    String error_sms = "error-sms";
+    String reload = "<script>  document.addEventListener(\"DOMContentLoaded\", e=>{ reloadChanges(); });</script>";
     String errorPanel = "<div id=\"general-error-panel\">\n" +
             "        <div id=\"gep-img\">\n" +
             "            <img width=\"78\" src=\"recursos/imagenes/errorSpan.png\" alt=\"\"> <br>\n" +
             "            <span>Error!</span>\n" +
             "        </div>\n" +
             "        <span id=\"error-message\">\n" +
-            "           \n" + error_sms +
+            "        error-sms\n"+
             "        </span>\n" +
             "        <button id=\"gep-button\">OK</button>\n" +
             "    </div>";
+    String successPanel = "<form action=\"/medicamentos\" method=\"post\">\n" +
+            "    <div id=\"general-success-panel\">\n" +
+            "        <div id=\"gsp-img\">\n" +
+            "            <img width=\"78\" src=\"recursos/imagenes/check_circle.svg\" alt=\"\"> <br>\n" +
+            "            <span>Exito!</span>\n" +
+            "        </div>\n" +
+            "        <span id=\"success-message\">\n" +
+            "        success-sms <br>\n" +
+            "        <button type=\"submit\" id=\"gsp-button\">Continuar</button>\n" +
+            "        </span>\n" +
+            "    </div>\n" +
+            "</form>";
 %>
 <main class="medicamentos-main">
     <div class="tr-form-wrapper">
@@ -206,7 +217,7 @@
                 <span> ¿Realmente desea eliminar este registro? <br>
                     Esta acción no se puede deshacer
                 </span>
-                <form onsubmit="reloadChanges();" method="post" action="${pageContext.request.contextPath}/medicamentos">
+                <form method="post" action="${pageContext.request.contextPath}/medicamentos">
                     <div id="buttons-delete">
                         <div class="wrapper-bd-pop">
                             <button id="bd-pop-cancelar" type="button">CANCELAR</button>
@@ -226,7 +237,7 @@
         }else
             if(request.getParameter("op-button")!=null
                 && request.getParameter("id-medicamento-n")!=null){
-            boolean error = true;
+            boolean error;
             String exc = "";
             try
             {
@@ -260,7 +271,7 @@
 
                     try {
                         if (objeto.insertar(idn, generic, comercial, precio_n, connexion))
-                            out.println(reload);
+                            out.print(successPanel.replace("success-sms", "Registro insertado."));
                     } catch (NumberFormatException NFE) {
                         out.print("Error de conversion numérica: " + NFE);
                     } catch (Exception e) {
@@ -290,7 +301,9 @@
         }else if(request.getParameter("erase-med")!=null
             && request.getParameter("del-id")!= null){
             try {
-                objeto.eliminar(Integer.parseInt(request.getParameter("del-id")), connexion);
+                if(objeto.eliminar(Integer.parseInt(request.getParameter("del-id")), connexion)){
+                    out.print(successPanel.replace("success-sms", "Registro eliminado."));
+                }
             } catch (NumberFormatException NFE) {
                 out.print(errorPanel.replace("error-sms",
                         "Error de conversion numérica: " + NFE));
@@ -299,7 +312,6 @@
                         "" + e));
             }
         }
-
     %>
 
 </main>
