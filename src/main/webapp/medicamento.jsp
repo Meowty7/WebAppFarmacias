@@ -52,13 +52,29 @@
     String generic = "";
     String attribute = "";
     String value = "";
+    String delete_btt;
+    String reload = "<script>  document.addEventListener(\"DOMContentLoaded\", e=>{ reloadChanges();  });</script>";
+    String error_sms = "error-sms";
+    String errorPanel = "<div id=\"general-error-panel\">\n" +
+            "        <div id=\"gep-img\">\n" +
+            "            <img width=\"78\" src=\"recursos/imagenes/errorSpan.png\" alt=\"\"> <br>\n" +
+            "            <span>Error!</span>\n" +
+            "        </div>\n" +
+            "        <span id=\"error-message\">\n" +
+            "           \n" + error_sms +
+            "        </span>\n" +
+            "        <button id=\"gep-button\">OK</button>\n" +
+            "    </div>";
 %>
 <main class="medicamentos-main">
     <div class="tr-form-wrapper">
         <div class="th-form-wrapper">
             <form method="POST" id="add-form" action="${pageContext.request.contextPath}/medicamentos" class="add-med">
-                <input aria-label="" id="lola" hidden value="true" name="new-m" type="text">
-                <button value="insertar" id="op-button-insertar" name="op-button-insertar" type="submit" class="form-button insertar">Añadir Medicamento</button>
+                <input aria-label="" id="new_m" hidden value="true" name="new-m" type="text">
+                <button id="op-button-insertar"
+                        name="op-button-insertar"
+                        type="submit"
+                        class="form-button insertar">Añadir Medicamento</button>
             </form>
         </div>
     </div>
@@ -73,13 +89,13 @@
                 <th></th>
             </tr>
             </thead>
-
             <tbody>
             <%
                 try {
                     medicamentos = objeto.consulta_registro(connexion);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    out.print(errorPanel.replace("error-sms",
+                            "" + e));
                 }
                 for (Medicamentos medicamento: medicamentos) {
             %>
@@ -110,6 +126,7 @@
                 || request.getParameter("new-m")!=null) {
 
             if(request.getParameter("op-button-insertar")==null) {
+                delete_btt = "";
                 try {
                     attribute = "readonly";
                     value = "guardar";
@@ -122,42 +139,59 @@
                     pageContext.setAttribute("val3", comercialName);
                     pageContext.setAttribute("val4", price);
                 } catch (NumberFormatException NFE) {
-                    out.print("Error de conversion numérica: " + NFE);
+                    out.print(errorPanel.replace("error-sms",
+                            "Error de conversion numérica: " + NFE));
                 } catch (Exception e) {
-                    out.print("Ocurrió un error, " + e);
+                    out.print(errorPanel.replace("error-sms",
+                            "" + e));
                 }
             }else{
                 attribute = "required";
                 value = "insertar";
+                delete_btt = "hidden";
             }
 
     %>
     <section id="operations-container">
         <div>
-            <form onsubmit="reloadChanges()" name="popupContact" autocomplete="off" id="popupContact" action="${pageContext.request.contextPath}/medicamentos" method="POST">
+            <form name="popupContact" autocomplete="off" id="popupContact" action="${pageContext.request.contextPath}/medicamentos" method="POST">
                 <div class="field-container A">
                     <label for="id-medicamento-n">Código Medicamento</label>
-                    <input <%=attribute%> autocomplete="off" class="input-formEdit" type="text" name="id-medicamento-n" id="id-medicamento-n" value="${val1}">
+                    <input <%=attribute%>
+                            autocomplete="off"
+                            class="input-formEdit"
+                            type="text"
+                            name="id-medicamento-n"
+                            id="id-medicamento-n" value="${val1}">
                 </div>
 
                 <div class="field-container B">
                     <label for="nombre-generic-n">Nombre Genérico</label>
-                    <input class="input-formEdit" id="nombre-generic-n" type="text" name="nombre-generic-n" value="${val2}" required>
+                    <input class="input-formEdit"
+                           id="nombre-generic-n"
+                           type="text"
+                           name="nombre-generic-n" value="${val2}" required>
                 </div>
 
                 <div class="field-container C">
                     <label for="nombre-comercial-n">Nombre Comercial</label>
-                    <input class="input-formEdit" id="nombre-comercial-n" type="text" name="nombre-comercial-n" value="${val3}" required>
+                    <input class="input-formEdit"
+                           id="nombre-comercial-n"
+                           type="text"
+                           name="nombre-comercial-n" value="${val3}" required>
                 </div>
 
                 <div class="field-container D">
                     <label for="precio-n">Precio</label>
-                    <input class="input-formEdit" type="text" name="precio-n" id="precio-n" value="${val4}" required autocomplete="off">
+                    <input class="input-formEdit" type="text"
+                           name="precio-n"
+                           id="precio-n" value="${val4}"
+                           required>
                 </div>
 
                 <div id="button-container">
                     <button id="save" class="form-button save" name="op-button" value="<%=value%>" type="submit">Guardar</button>
-                    <button class="form-button delete" id="delete" name="op-button" type="button" >Eliminar</button>
+                    <button <%=delete_btt%> onclick="" class="form-button delete" id="delete" name="op-button" type="button" >Eliminar</button>
                     <button id="cancel" class="form-button cancel" name="op-button" value="cancelar" type="button">Cancelar</button>
                 </div>
             </form>
@@ -178,24 +212,20 @@
                             <button id="bd-pop-cancelar" type="button">CANCELAR</button>
                         </div>
                         <div class="wrapper-bd-pop">
-                            <input hidden type="text" name="id-medicamento-n" value="${val1}">
+                            <input hidden type="text" name="id-medicamento-n2" value="${val1}">
                             <button name="bd-pop-eliminar" value="eliminar" id="bd-pop-eliminar" type="submit">ELIMINAR</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
     </section>
 
 
     <%
         }else
             if(request.getParameter("op-button")!=null
-                &&
-                request.getParameter("id-medicamento-n")!=null
-                ||
-                request.getParameter("bd-pop-eliminar")!=null ){
+                && request.getParameter("id-medicamento-n")!=null){
 
             try
             {
@@ -204,41 +234,72 @@
                 comercial = request.getParameter("nombre-comercial-n");
                 generic = request.getParameter("nombre-generic-n");
             } catch (NumberFormatException NFE) {
-                out.print("Error de conversion numérica: " + NFE);
+                out.print(errorPanel.replace("error-sms",
+                        "Error de conversion numérica:" + NFE));
             } catch (Exception e) {
-                out.print("Ocurrió un error, " + e);
+                out.print(errorPanel.replace("error-sms",
+                        "" + e));
             }
 
             if (("guardar").equals(request.getParameter("op-button"))) {
-                try
-                {
-                    objeto.modificar(idn, generic, comercial, precio_n, connexion);
-                } catch (NumberFormatException NFE) {
-                    out.print("Error de conversion numérica: " + NFE);
-                } catch (Exception e) {
-                    out.print("Ocurrió un error, " + e);
-                }
-            }else
-                if (("eliminar").equals(request.getParameter("bd-pop-eliminar"))) {
-                    try
-                    {
-                        objeto.eliminar(idn, connexion);
+
+                if(!generic.isBlank() && !comercial.isBlank()) {
+                    try {
+                        if (objeto.modificar(idn, generic, comercial, precio_n, connexion))
+                            out.println(reload);
+                    } catch (NumberFormatException NFE) {
+                        out.print(errorPanel.replace("error-sms",
+                                "Error de conversion numérica: " + NFE));
                     } catch (Exception e) {
-                        out.print("Ocurrió un error, " + e);
+                        out.print(errorPanel.replace("error-sms",
+                                "" + e));
                     }
+                }else{
+                    out.print(errorPanel.replace("error-sms",
+                            "Campos vacíos."));
+                }
+
             }else if(("cancelar").equals(request.getParameter("op-button"))){
               //hacer nada
             }else
-                if("insertar".equals(request.getParameter("op-button"))){
-                    try
-                    {
-                        objeto.insertar(idn, generic, comercial, precio_n, connexion);
-                    } catch (NumberFormatException NFE) {
-                        out.print("Error de conversion numérica: " + NFE);
-                    } catch (Exception e) {
-                        out.print("Ocurrió un error, " + e);
+                if("insertar".equals(request.getParameter("op-button")) ){
+                    if(!generic.isBlank() && !comercial.isBlank()) {
+                        try {
+                            if (objeto.insertar(idn, generic, comercial, precio_n, connexion))
+                                out.println(reload);
+                        } catch (NumberFormatException NFE) {
+                            out.print("Error de conversion numérica: " + NFE);
+                        } catch (Exception e) {
+                            try {
+                                if (objeto.existeMedicamento(idn, connexion)) {
+                                    out.print(errorPanel.replace("error-sms",
+                                            "¡El código ingresado ya existe en la base de datos!"));
+                                } else {
+                                    out.print(errorPanel.replace("error-sms",
+                                            "" + e));
+                                }
+                            } catch (Exception ex) {
+                                out.print(errorPanel.replace("error-sms",
+                                        "" + ex));
+                            }
+                        }
+                    }else{
+                        out.print(errorPanel.replace("error-sms",
+                                "Campos vacíos."));
                     }
             }
+        }else
+            if(request.getParameter("op-button")!=null
+                    || request.getParameter("id-medicamento-n2")!=null){
+                if (("eliminar").equals(request.getParameter("bd-pop-eliminar"))) {
+                    try
+                    {
+                        objeto.eliminar(Integer.parseInt(request.getParameter("id-medicamento-n2")), connexion);
+                    } catch (Exception e) {
+                        out.print(errorPanel.replace("error-sms",
+                                ""+e));
+                    }
+                }
         }
 
     %>

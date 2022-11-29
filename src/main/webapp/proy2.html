@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="recursos/estilos/estilo-general.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title></title>
+    <style>
+        #my2main{
+            width: 85vw;
+            position: relative;
+            top: 150px;
+        }
+
+        .main-wrapper{
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+            height: 60vh;
+            display: grid;
+            background: lightgray;
+        }
+
+        #csv-list-div{
+            background: lavender;
+            width: 430px;
+            height: 100%;
+        }
+
+        #map-div{
+            height: 100%;
+            background: bisque;
+        }
+
+        #search-button-wrp{
+            box-shadow: 0 1px 3px gray, 1px 1px 3px gray;
+            border-radius: 5px;
+            margin-left: 2%;
+            margin-top: 3%;
+            width: 80%;
+            height: fit-content;
+            background: white;
+            display: grid;
+            grid-template-columns: 1fr 0.2fr;
+            padding-bottom: 6px;
+            padding-top: 6px;
+        }
+
+        #search-button-wrp img{
+            align-self: center;
+        }
+
+        #search-button-wrp img:hover{
+
+        }
+
+         .material-symbols-outlined {
+             font-variation-settings:
+                     'FILL' 0,
+                     'wght' 400,
+                     'GRAD' 0,
+                     'opsz' 48;
+             color: #B7B7B7FF;
+         }
+
+        .material-symbols-outlined:hover{
+            color: lightskyblue;
+        }
+
+        #buscar-medicamento{
+            text-align: left;
+            border: none;
+            padding: 10px;
+            font-size: 1.4rem;
+            height: 100%;
+            width: 100%;
+        }
+
+        #buscar-medicamento:focus{
+           outline: none;
+        }
+
+        #search-img-btt{
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #farmacias-list{
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 12px;
+        }
+
+        .farmacias-info{
+            margin-top: 20px;
+            border-top: 1px solid lightgray;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .farmacias-info h4{
+            font-family: "Google Sans",sans-serif;
+            font-size: 1.7rem;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 1.75rem;
+        }
+
+        .nombre-pharma{
+            align-self: center;
+            padding: 10px;
+        }
+
+        .farmacias-info p{
+            color: #6E6D6DFF;
+            font-size: 1.4rem;
+            font-family: Inter, sans-serif;
+            line-height: 2.320rem;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo-box">
+        <picture class="logo">
+            <img class="logo-img" src="recursos/imagenes/UbiFarma.png" alt="LOGO">
+        </picture>
+        <div class="logo-description">
+            <h1>FarMap</h1>
+            <span>|</span>
+            <div>
+                <p>Farmacias a</p>
+                <p>tu alcance</p>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
+            <li><a class="admin-tab" href="#">Administrar tablas <img src="recursos/iconos/down-arrow.png" alt="opciones-desplegables"></a></li>
+            <li><a href="/logout">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+    <img class="menu-icon" src="recursos/iconos/menu-icon.png" alt="menu-icon">
+
+    <div class="menu no-ver" id="show-this">
+        <ul>
+            <li><a href="/farmacias">Farmacias</a></li>
+            <li><a href="/medicamentos">Medicamentos</a></li>
+        </ul>
+    </div>
+</header>
+
+<main id="my2main">
+    <div class="main-wrapper">
+        <form autocomplete="off" novalidate id="csv-list-div" action="">
+            <div id="search-button-wrp">
+                <label>
+                    <input type="text"
+                           required
+                           placeholder="Buscar un Medicamento"
+                           id="buscar-medicamento"
+                           name="buscar-medicamento">
+                </label>
+                <button type="button" id="search-img-btt">
+                    <span title="Buscar" class="material-symbols-outlined">search</span>
+                </button>
+            </div>
+            <div id="farmacias-list">
+                <div class="farmacias-info">
+                    <div class="nombre-pharma">
+                        <h4>Farmacia El Javillo | Rio Abajo</h4>
+                    </div>
+                    <p>
+                        Medicamento: Paracetamol <br>
+                        Distancia: 540km <br>
+                        Cantidad Disponible: 5
+                    </p>
+                </div>
+            </div>
+        </form>
+        <div id="map-div">
+
+        </div>
+    </div>
+</main>
+
+</body>
+<footer>
+    <meta charset="UTF-8">
+    <div class="footer-info">
+        <h4>Equipo</h4>
+        <p>Miguel González</p>
+        <p>Franz Vera</p>
+        <p>Mayra Medina</p>
+        <p>David Fabbroni</p>
+        <p>Jason Zheng</p>
+    </div>
+    <img src="recursos/imagenes/utp-logo.png" alt="">
+</footer>
+</html>

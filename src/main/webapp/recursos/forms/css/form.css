@@ -147,3 +147,52 @@ CSS settings for HTML div Exact Center
 .tooltip-container:hover .tooltiptext {
     visibility: visible;
 }
+
+/*
+********************
+PANEL DE ERROR
+********************
+ */
+#general-error-panel{
+    z-index: 1;
+    top: 30%;
+    left: 40%;
+    background: white;
+    position: absolute;
+    width: 400px;
+    text-align: center;
+    display: grid;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px #797878FF, 0 2px 3px #797878FF;
+}
+
+#gep-img{
+    margin-top: 10px;
+}
+
+#gep-img span{
+    font-family: Inter,sans-serif, Arial;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#error-message{
+    font-family: Inter,sans-serif, Arial;
+    font-size: 1.5rem;
+}
+
+#gep-button{
+    font-family: Inter,sans-serif, Arial;
+    font-weight: bold;
+    font-size: 1.6rem;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background: #FA415BFF;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#gep-button:hover{
+    background: #FA415BCB;
+}

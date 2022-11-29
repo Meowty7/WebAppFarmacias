@@ -9,17 +9,26 @@ function desplegarMenu()
 }
 
 const form = document.getElementById('popupContact');
+const error_btt= document.getElementById('gep-button');
+
+if(error_btt) {
+    error_btt.addEventListener("click", e => {
+        document.querySelector('#general-error-panel').style.display = 'none'
+    });
+}
+
+function reloadChanges(){
+    setTimeout(function (){
+        location.reload()
+    },4)
+}
 
 if(form){
-    function reloadChanges(){
-        setTimeout(function (){
-            location.reload()
-        },10)
-    }
 
     const del = document.getElementById('delete');
     const popup_del = document.querySelector('.popup-delete_wrap');
     const cancel_del = document.getElementById('bd-pop-cancelar');
+
     del.addEventListener('click', e =>{
         popup_del.style.display = 'block'
     });
@@ -30,7 +39,8 @@ if(form){
     const cancel = document.getElementById('cancel')
     cancel.addEventListener("click", (e)=>{
         document.getElementById('operations-container').style.display = 'none'
-    })
-}
+    });
+
+};
 
 

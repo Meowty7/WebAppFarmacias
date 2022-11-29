@@ -8,7 +8,7 @@ public class Operaciones {
     private Statement statement;
     private ResultSet resultSet;
 
-    public void insertar(
+    public boolean insertar(
             int idMedicamento,
             String nombreGeneric,
             String nombreComercial,
@@ -16,38 +16,38 @@ public class Operaciones {
             Conexion connexion
     )throws Exception{
         Connection con = null;
+        int r = 0;
         try{
             con = connexion.establecerConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO medicamentos(id_medicamento, nom_generico, nom_comercial, precio_m) " +
-                    "VALUES (?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO medicamentos(id_medicamento, nom_generico, nom_comercial, precio_m) VALUES (?,?,?,?)");
             ps.setInt(1,idMedicamento);
             ps.setString(2,nombreGeneric);
             ps.setString(3,nombreComercial);
             ps.setFloat(4,precioFabricante);
-            ps.executeUpdate();
-
+            r = ps.executeUpdate();
+            ps.close();
             con.close();
+            return r > 0;
         }catch (SQLException sqlex){
             Objects.requireNonNull(con).close();
-            throw new Exception ("Error...al incluir nuevo registro en la base de datos |" + sqlex);
+            throw new Exception ("<h3> Error...al incluir nuevo registro en la base de datos </h3> |" + sqlex);
         }
     }
 
-    public boolean existeID(int idMedicamento, Conexion connexion){
-        boolean si = false;
-        LinkedList<Medicamentos> lista = new LinkedList<>();
-        try {
-            lista = consulta_registro(connexion);
-        } catch (Exception e) {
-           System.out.println(e);
+    public boolean existeMedicamento(int idMedicamento, Conexion connexion) throws Exception {
+        Connection con = null;
+        try{
+            con = connexion.establecerConexion();
+            PreparedStatement ps = con.prepareStatement
+                    ("SELECT id_medicamento from medicamentos where id_medicamento = ?");
+            ps.setInt(1,idMedicamento);
+            resultSet = ps.executeQuery();
+            con.close();
+            return resultSet.next();
+        }catch (SQLException sqlex){
+            Objects.requireNonNull(con).close();
+            throw new Exception ("Error...en la consulta de todos los registros |" + sqlex);
         }
-        for (Medicamentos x : lista) {
-            if (idMedicamento == x.getIdMedicamento()) {
-                si = true;
-                break;
-            }
-        }
-        return si;
     }
 
     public LinkedList <Medicamentos> consulta_registro(Conexion connexion) throws Exception{
@@ -93,7 +93,7 @@ public class Operaciones {
         }
     }
 
-    public void modificar(
+    public boolean modificar(
             int idMedicamento,
             String nombreGeneric,
             String nombreComercial,
@@ -101,6 +101,7 @@ public class Operaciones {
             Conexion connexion
     ) throws Exception {
         Connection con = null;
+        int r = -1;
         try{
             con = connexion.establecerConexion();
             PreparedStatement ps = con.prepareStatement("UPDATE medicamentos SET nom_generico = ?, nom_comercial = ?, precio_m = ? " +
@@ -109,14 +110,10 @@ public class Operaciones {
             ps.setString(2,nombreComercial);
             ps.setFloat(3,precioFabricante);
             ps.setInt(4, idMedicamento);
-            if(ps.executeUpdate()>0){
-                System.out.println("Inserción exitosa");
-            }else{
-                System.out.println("No hubo inserción");
-            }
+            r = ps.executeUpdate();
             ps.close();
-
             con.close();
+            return r > 0;
         }catch (SQLException sqlex){
             Objects.requireNonNull(con).close();
             throw new Exception ("Error...al incluir nuevo registro en la base de datos |" + sqlex);
@@ -153,22 +150,6 @@ public class Operaciones {
         }catch (SQLException e){
             Objects.requireNonNull(con).close();
             throw new Exception ("Error al verificar el usuario" + e);
-        }
-    }
-
-    public void new_user(String uname, String u, Conexion conexion) throws Exception {
-        Connection con = null;
-        try{
-            con = conexion.establecerConexion();
-            PreparedStatement ps =
-                    con.prepareStatement("insert into user (username, password) VALUES (?,?)");
-            ps.setString(1, uname);
-            ps.setString(2, u);
-            resultSet = ps.executeQuery();
-            con.close();
-        }catch (SQLException e){
-            Objects.requireNonNull(con).close();
-            throw new Exception ("Error al registrar el nuevo usuario" + e);
         }
     }
 
@@ -230,7 +211,6 @@ public class Operaciones {
             ps.setInt(2,idFarmacia);
             ps.setFloat(3,precio);
             ps.executeUpdate();
-
             con.close();
         }catch (SQLException sqlex){
             Objects.requireNonNull(con).close();
