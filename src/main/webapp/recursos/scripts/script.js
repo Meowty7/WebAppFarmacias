@@ -30,10 +30,10 @@ if(form){
     const cancel_del = document.getElementById('bd-pop-cancelar');
 
     del.addEventListener('click', e =>{
-        popup_del.style.display = 'block'
+        popup_del.style.display = 'block';
     });
     cancel_del.addEventListener("click", e=>{
-        popup_del.style.display = 'none'
+        popup_del.style.display = 'none';
     });
 
     const cancel = document.getElementById('cancel')

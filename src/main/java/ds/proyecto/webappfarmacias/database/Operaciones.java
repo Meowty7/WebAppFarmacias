@@ -127,8 +127,12 @@ public class Operaciones {
             PreparedStatement ps = con.prepareStatement("DELETE FROM medicamentos " +
                     "WHERE id_medicamento = ?");
             ps.setInt(1,idMedicamento);
-            if(ps.executeUpdate() > 0)
+            if(ps.executeUpdate() > 0) {
+                System.out.println("se eliminó");
                 return true;
+            }else {
+                System.out.println("NO SE HIZO NADA");
+            }
             con.close();
         }catch (SQLException sqlex){
             Objects.requireNonNull(con).close();

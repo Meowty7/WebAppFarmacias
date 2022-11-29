@@ -106,7 +106,7 @@
                 <td class="cells"><%out.print(medicamento.getPrecioFabricante());%></td>
                 <td class="form-cell">
                     <form name="myForm" action="${pageContext.request.contextPath}/medicamentos" id="myForm" method="POST">
-                        <input aria-label="" hidden id="id" type="text" name="id" value="<%out.print(medicamento.getIdMedicamento());%>">
+                        <input aria-label="" hidden id="editable-id" type="text" name="editable-id" value="<%out.print(medicamento.getIdMedicamento());%>">
                         <input aria-label="" hidden type="text" id="generico" name="generico" value="<%out.print(medicamento.getNombreGeneric());%>">
                         <input aria-label="" hidden type="text" name="comercial" value="<%out.print(medicamento.getNombreComercial());%>">
                         <input aria-label="" hidden type="text" name="precio" value="<%out.print(medicamento.getPrecioFabricante());%>">
@@ -122,7 +122,7 @@
 
     <%
 
-        if( request.getParameter("id")!=null && request.getParameter("op-button")==null
+        if(request.getParameter("editable-id")!=null && request.getParameter("op-button")==null
                 || request.getParameter("new-m")!=null) {
 
             if(request.getParameter("op-button-insertar")==null) {
@@ -130,7 +130,7 @@
                 try {
                     attribute = "readonly";
                     value = "guardar";
-                    id = Integer.parseInt(request.getParameter("id"));
+                    id = Integer.parseInt(request.getParameter("editable-id"));
                     genericName = request.getParameter("generico");
                     comercialName = request.getParameter("comercial");
                     price = Float.parseFloat(request.getParameter("precio"));
@@ -191,7 +191,7 @@
 
                 <div id="button-container">
                     <button id="save" class="form-button save" name="op-button" value="<%=value%>" type="submit">Guardar</button>
-                    <button <%=delete_btt%> onclick="" class="form-button delete" id="delete" name="op-button" type="button" >Eliminar</button>
+                    <button <%=delete_btt%> onclick="" class="form-button delete" value="eliminar" id="delete" name="op-button" type="button" >Eliminar</button>
                     <button id="cancel" class="form-button cancel" name="op-button" value="cancelar" type="button">Cancelar</button>
                 </div>
             </form>
@@ -206,14 +206,14 @@
                 <span> ¿Realmente desea eliminar este registro? <br>
                     Esta acción no se puede deshacer
                 </span>
-                <form onsubmit="reloadChanges()" action="${pageContext.request.contextPath}/medicamentos">
+                <form onsubmit="reloadChanges();" method="post" action="${pageContext.request.contextPath}/medicamentos">
                     <div id="buttons-delete">
                         <div class="wrapper-bd-pop">
                             <button id="bd-pop-cancelar" type="button">CANCELAR</button>
                         </div>
                         <div class="wrapper-bd-pop">
-                            <input hidden type="text" name="id-medicamento-n2" value="${val1}">
-                            <button name="bd-pop-eliminar" value="eliminar" id="bd-pop-eliminar" type="submit">ELIMINAR</button>
+                            <input hidden type="text" name="del-id" value="${val1}">
+                            <button name="erase-med" value="eliminar" id="erase-med" type="submit">ELIMINAR</button>
                         </div>
                     </div>
                 </form>
@@ -226,24 +226,26 @@
         }else
             if(request.getParameter("op-button")!=null
                 && request.getParameter("id-medicamento-n")!=null){
-
+            boolean error = true;
+            String exc = "";
             try
             {
                 idn = Integer.parseInt(request.getParameter("id-medicamento-n"));
                 precio_n = Float.parseFloat(request.getParameter("precio-n"));
                 comercial = request.getParameter("nombre-comercial-n");
                 generic = request.getParameter("nombre-generic-n");
+                error = false;
             } catch (NumberFormatException NFE) {
-                out.print(errorPanel.replace("error-sms",
-                        "Error de conversion numérica:" + NFE));
-            } catch (Exception e) {
-                out.print(errorPanel.replace("error-sms",
-                        "" + e));
+                error = true;
+                exc = "Error de conversion numérica:" + NFE;
+            }catch (Exception e){
+                error = true;
+                exc = e.getMessage();
             }
 
-            if (("guardar").equals(request.getParameter("op-button"))) {
+            if(!error && !generic.isBlank() && !comercial.isBlank()){
+                if (("guardar").equals(request.getParameter("op-button"))) {
 
-                if(!generic.isBlank() && !comercial.isBlank()) {
                     try {
                         if (objeto.modificar(idn, generic, comercial, precio_n, connexion))
                             out.println(reload);
@@ -254,52 +256,48 @@
                         out.print(errorPanel.replace("error-sms",
                                 "" + e));
                     }
-                }else{
-                    out.print(errorPanel.replace("error-sms",
-                            "Campos vacíos."));
-                }
+                }else if("insertar".equals(request.getParameter("op-button")) ){
 
-            }else if(("cancelar").equals(request.getParameter("op-button"))){
-              //hacer nada
-            }else
-                if("insertar".equals(request.getParameter("op-button")) ){
-                    if(!generic.isBlank() && !comercial.isBlank()) {
-                        try {
-                            if (objeto.insertar(idn, generic, comercial, precio_n, connexion))
-                                out.println(reload);
-                        } catch (NumberFormatException NFE) {
-                            out.print("Error de conversion numérica: " + NFE);
-                        } catch (Exception e) {
-                            try {
-                                if (objeto.existeMedicamento(idn, connexion)) {
-                                    out.print(errorPanel.replace("error-sms",
-                                            "¡El código ingresado ya existe en la base de datos!"));
-                                } else {
-                                    out.print(errorPanel.replace("error-sms",
-                                            "" + e));
-                                }
-                            } catch (Exception ex) {
-                                out.print(errorPanel.replace("error-sms",
-                                        "" + ex));
-                            }
-                        }
-                    }else{
-                        out.print(errorPanel.replace("error-sms",
-                                "Campos vacíos."));
-                    }
-            }
-        }else
-            if(request.getParameter("op-button")!=null
-                    || request.getParameter("id-medicamento-n2")!=null){
-                if (("eliminar").equals(request.getParameter("bd-pop-eliminar"))) {
-                    try
-                    {
-                        objeto.eliminar(Integer.parseInt(request.getParameter("id-medicamento-n2")), connexion);
+                    try {
+                        if (objeto.insertar(idn, generic, comercial, precio_n, connexion))
+                            out.println(reload);
+                    } catch (NumberFormatException NFE) {
+                        out.print("Error de conversion numérica: " + NFE);
                     } catch (Exception e) {
-                        out.print(errorPanel.replace("error-sms",
-                                ""+e));
+                        try {
+                            if (objeto.existeMedicamento(idn, connexion)) {
+                                out.print(errorPanel.replace("error-sms",
+                                        "¡El código ingresado ya existe en la base de datos!"));
+                            } else {
+                                out.print(errorPanel.replace("error-sms",
+                                        "" + e));
+                            }
+                        } catch (Exception ex) {
+                            out.print(errorPanel.replace("error-sms",
+                                    "" + ex));
+                        }
                     }
+
                 }
+            }else if(error){
+                out.print(errorPanel.replace("error-sms",
+                        exc));
+            }else{
+                out.print(errorPanel.replace("error-sms",
+                        "Campos vacios."));
+            }
+
+        }else if(request.getParameter("erase-med")!=null
+            && request.getParameter("del-id")!= null){
+            try {
+                objeto.eliminar(Integer.parseInt(request.getParameter("del-id")), connexion);
+            } catch (NumberFormatException NFE) {
+                out.print(errorPanel.replace("error-sms",
+                        "Error de conversion numérica: " + NFE));
+            } catch (Exception e) {
+                out.print(errorPanel.replace("error-sms",
+                        "" + e));
+            }
         }
 
     %>
