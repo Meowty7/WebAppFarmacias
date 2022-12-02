@@ -3,10 +3,11 @@ body{
     background-size: cover;
 }
 
+
 main{
     height: 90vh;
     display: grid;
-    place-content: center;
+    place-items: center;
     padding: 0 20px;
 }
 
@@ -17,6 +18,7 @@ main{
     border: 1px solid black;
     padding: 20px;
     border-radius: 40px;
+    width: 80%;
 }
 
 .main-content h2{
@@ -32,6 +34,7 @@ main{
 
 .main-info{
     font-size: 3rem;
+    margin-right: 24px;
 }
 
 @media(min-width: 1020px){

@@ -30,9 +30,9 @@
         }
     %>
     <div class="main-content">
-        <picture>
-            <img src="recursos/imagenes/UbiFarma-2.png" alt="farmap-logo">
-        </picture>
+
+        <img src="recursos/imagenes/UbiFarma-2.png" alt="farmap-logo">
+
 
         <div class="main-info">
             <h2>Bienvenido Administrador</h2>

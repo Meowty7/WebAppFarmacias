@@ -15,6 +15,7 @@
     <link rel="shortcut icon" href="recursos/imagenes/UbiFarma-2.png">
     <!-- Estilos -->
     <link rel="stylesheet" href="recursos/estilos/estilo-general.css">
+    <link rel="stylesheet" href="recursos/estilos/medicamento.css">
     <link rel="stylesheet" href="recursos/forms/css/form.css">
     <link rel="stylesheet" href="recursos/forms/css/table.css">
     <link rel="stylesheet" href="recursos/estilos/popdel.css">

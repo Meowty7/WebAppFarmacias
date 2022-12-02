@@ -15,7 +15,7 @@ create table medicamentos
         constraint PK_medicamentos2
             primary key,
     nom_generico   varchar(200),
-    nom_comercial  varchar(100),
+    nom_comercial  varchar(100) unique,
     precio_m       decimal(15, 2)
 );
 

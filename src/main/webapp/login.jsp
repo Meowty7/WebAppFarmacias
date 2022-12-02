@@ -17,30 +17,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <style>
-       .password-container .user-input{
-           width: 100%;
-       }
-
-       .togglePassword{
-           position: absolute;
-           cursor: pointer;
-       }
-
-       .form-wrp{
-           width: 100%;
-           padding: 31px 55px;
-           background: white;
-           border-radius: 5px;
-           box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
-       }
-
-       #error-span{
-           color: red;
-           font-size: 1.2rem;
-           position: absolute;
-       }
-    </style>
 
 </head>
 <body>
