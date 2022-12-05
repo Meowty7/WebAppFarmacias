@@ -9,7 +9,7 @@ public class Conexion {
     private final String DATABASE;
     private final String USER;
     private final String PASSWORD;
-    private Connection cnn;
+
     public Conexion(String database, String user, String password){
         this.DATABASE = database;
         this.USER = user;
@@ -19,8 +19,7 @@ public class Conexion {
         try {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + new File("src/main/resources/database/"+DATABASE+".db").getAbsolutePath();
-            cnn = DriverManager.getConnection(url, USER, PASSWORD);
-            return cnn;
+            return DriverManager.getConnection(url, USER, PASSWORD);
         } catch (ClassNotFoundException e){
             throw new Exception ("\nPara el programador: "+e+
                     "\n\nPara el usuario: Error...No se pudo cargar el driver sqlite JDBC");

@@ -43,6 +43,10 @@ main h2{
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 }
 
+.error-span-wrapper{
+    position: relative;
+}
+
 #error-span{
     color: red;
     font-size: 1.2rem;
